@@ -1,30 +1,37 @@
+// app/layout.js or app/layout.tsx (if using TypeScript)
+import React from 'react';
 import type { Metadata } from "next";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"],variable: '--font-inter' });
-const ibmPlexSerif=IBM_Plex_Serif({
-  subsets:['latin'],
-  weight:['400','700'],
+const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
+const ibmPlexSerif = IBM_Plex_Serif({
+  subsets: ['latin'],
+  weight: ['400', '700'],
   variable: '--font-ibm-plex-serif'
-})
+});
 
 export const metadata: Metadata = {
   title: "FinTech Nexus",
-  description: "FinTech Nexus is a morden blanking platform. ",
-  icons:{
-    icon:'/icons/logo.svg'
+  description: "FinTech Nexus is a modern banking platform.",
+  icons: {
+    icon: '/icons/logo.svg'
   }
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={'${inter.variable} ${ibmPlexSerif.variable}'}>{children}</body>
+      <body className={`${inter.variable} ${ibmPlexSerif.variable}`}>
+        <main>
+          SIDEBAR
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
