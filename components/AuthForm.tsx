@@ -22,6 +22,7 @@ import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
 import { getLoggedInUser,signIn, signUp } from "@/lib/actions/user.actions";
+import PlaidLink from "./PlaidLink";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -32,7 +33,7 @@ const AuthForm =async ({ type }: { type: string }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const loggedInUser = await getLoggedInUser();
-  if (!user) redirect("/signup");
+  if (!user) redirect('/sign-up');
   const formSchema=authFormSchema(type);
 
   // 1. Define your form.
@@ -94,7 +95,7 @@ const AuthForm =async ({ type }: { type: string }) => {
       </header>
       {user ? (
         <div className="flex flex-col gap-4">
-          {/* PlaidLink */}
+          <PlaidLink user={user} variant="primary"/>
         </div>
       ) : (
         <>
