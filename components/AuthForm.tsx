@@ -51,9 +51,23 @@ const AuthForm =async ({ type }: { type: string }) => {
     // ✅ This will be type-safe and validated.
     setIsLoading(true);
     try{
+
         // Sign up with Appwrite & create a plaid link token
+        
         if(type === 'sign-up'){
-            const newUser= await signUp(data);
+            const userData={
+            firstName:data.firstName!,
+            lastName:data.lastName!,
+            address:data.address!,
+            city:data.city!,
+            state:data.state!,
+            postalCode:data.postalCode!,
+            dateOfBirth:data.dateOfBirth!,
+            ssn:data.ssn!,
+            email:data.email,
+            password:data.password
+            }
+            const newUser= await signUp(userData);
             setUser(newUser);
         }
         if(type === 'sign-in'){
