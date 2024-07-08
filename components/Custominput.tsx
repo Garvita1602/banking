@@ -35,7 +35,7 @@ const Custominput=({control,name,label,placeholder}:Custominput)=>{
                               </div>
                            </div>
                         )}
-                        />
+                    />
     )
 }
 export default Custominput

@@ -1,6 +1,6 @@
 import DoughnutChart from './DoughnutChart';
 import CountUp from 'react-countup'
-import React from 'react'
+//import React from 'react'
 import AnimatedCounter from './AnimatedCounter';
 
 const TotalBalancedBox=({
@@ -13,7 +13,7 @@ const TotalBalancedBox=({
             </div>
             <div className='flex flex-col gap-6'>
                 <h2 className='header-2'>
-                Bank Accounts:{totalBanks}
+                    Bank Accounts:{totalBanks}
                 </h2>
                 <div className='flex flex-col-gap-2'>
                     <p className='total-balance-label'>

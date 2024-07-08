@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import Custominput from "./Custominput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { getLoggedInUser,signIn, signUp } from "@/lib/actions/user.actions";
 import PlaidLink from "./PlaidLink";
 
@@ -28,12 +28,11 @@ const formSchema = z.object({
   email: z.string().email(),
 });
 
-const AuthForm =async ({ type }: { type: string }) => {
+const AuthForm = ({ type }: { type: string }) => {
   const router=useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const loggedInUser = await getLoggedInUser();
-  if (!user) redirect('/sign-up');
+  
   const formSchema=authFormSchema(type);
 
   // 1. Define your form.
@@ -115,7 +114,7 @@ const AuthForm =async ({ type }: { type: string }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} 
-            className="space-y-8">
+             className="space-y-8">
                 {type==='sign-up'&&(
                     <>
                         <div className="flex gap-4">
@@ -152,8 +151,10 @@ const AuthForm =async ({ type }: { type: string }) => {
                      )   : type=== 'sign-in'? 'Sign-In':'Sign-Up'}
                  </Button>
              </div>
-         </form>
+           </form>
           </Form>
+
+
           <footer className="flex justify-center gap-1">
             <p className="text-14 font-normal text-gray-600">{type==='sign-in' ? "Don't have a account" : "Already have an account"}
             </p>
@@ -164,7 +165,7 @@ const AuthForm =async ({ type }: { type: string }) => {
         </>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm
