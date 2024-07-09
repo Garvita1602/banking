@@ -76,7 +76,17 @@ export function formatAmount(amount: number): string {
   return formatter.format(amount);
 }
 
-export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
+export const parseStringify = (value: any) => {
+  if (value === undefined) {
+    return undefined; // or return null, or any other default value
+  }
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch (error) {
+    console.error('Error in parseStringify:', error);
+    return null; // or return the original value, or throw a custom error
+  }
+};
 
 export const removeSpecialCharacters = (value: string) => {
   return value.replace(/[^\w\s]/gi, "");
@@ -203,7 +213,7 @@ export const authFormSchema=(type:string) =>z.object({
   lastName: type ==='sign-in'?z.string().optional():  z.string().min(3),
   address: type ==='sign-in'?z.string().optional(): z.string().max(50),
   city: type ==='sign-in'?z.string().optional(): z.string().max(50),
-  state: type ==='sign-in'?z.string().optional(): z.string().max(15),
+  state: type ==='sign-in'?z.string().optional(): z.string().max(50),
   postalCode: type ==='sign-in'?z.string().optional(): z.string().min(3).max(6),
   dateOfBirth: type ==='sign-in'?z.string().optional(): z.string().min(3),
   ssn: type === 'sign-in'?z.string().optional(): z.string().min(3),

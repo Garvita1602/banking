@@ -23,6 +23,39 @@ const dwollaClient = new Client({
   secret: process.env.DWOLLA_SECRET as string,
 });
 
+
+interface DwollaError extends Error {
+  status?: number;
+  headers?: Headers;
+  body?: any;
+}
+
+export const createDwollaCustomer = async (
+  newCustomer: NewDwollaCustomerParams
+): Promise<string> => {
+  try {
+    const response = await dwollaClient.post("customers", newCustomer);
+    const location = response.headers.get("location");
+    if (!location) {
+      throw new Error("Dwolla customer created, but location header is missing");
+    }
+    return location;
+  } catch (err) {
+    console.error("Creating a Dwolla Customer Failed: ", err);
+    
+    const dwollaError = err as DwollaError;
+    
+    if (dwollaError.status && dwollaError.headers && dwollaError.body) {
+      console.error("Dwolla API Error Response:", {
+        status: dwollaError.status,
+        headers: dwollaError.headers,
+        body: dwollaError.body
+      });
+    }
+    
+    throw new Error(`Dwolla Customer Creation Failed: ${dwollaError.message || 'Unknown error'}`);
+  }
+};
 // Create a Dwolla Funding Source using a Plaid Processor Token
 export const createFundingSource = async (
   options: CreateFundingSourceOptions
@@ -51,17 +84,7 @@ export const createOnDemandAuthorization = async () => {
   }
 };
 
-export const createDwollaCustomer = async (
-  newCustomer: NewDwollaCustomerParams
-) => {
-  try {
-    return await dwollaClient
-      .post("customers", newCustomer)
-      .then((res) => res.headers.get("location"));
-  } catch (err) {
-    console.error("Creating a Dwolla Customer Failed: ", err);
-  }
-};
+
 
 export const createTransfer = async ({
   sourceFundingSourceUrl,
