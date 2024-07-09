@@ -114,7 +114,7 @@ const AuthForm = ({ type }: { type: string }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} 
-             className="space-y-8">
+             className="space-y-8 ">
                 {type==='sign-up'&&(
                     <>
                         <div className="flex gap-4">
